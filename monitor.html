@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Monitor page</title>
+    <link rel="stylesheet" href="/index.css" />
+    <h2>
+      <a href="about.html">About/</a> <a href="system.html">System/</a> <a href="index.html">Home/</a> <a href="help.html">Help</a>
+    </h2>
+    <h1>Monitoring Page</h1>
+    </br>
+    </br>
+    </br>
+    <p>
+      This is the page where you monitor the device. 
+    </p>
+<html>
+  <body>
+
+  <h4 id="lt">Button presses:</h4>
+    <div id="graph">
+     
+    </div>
+    <hr/>
+    <div id="dataout">
+     
+    </div>
+  </body>
+</html>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<script>
+ const firebaseConfig = {
+  apiKey: "AIzaSyA5SgLINuoZ00fjnQql4d-zBKCC8ubXR68",
+  authDomain: "coursework-ef53f.firebaseapp.com",
+  projectId: "coursework-ef53f",
+  storageBucket: "coursework-ef53f.appspot.com",
+  messagingSenderId: "210678734913",
+  appId: "1:210678734913:web:c94eab90d70d12416de6c0"
+};
+ 
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+
+<script>
+ 
+   var temps = [];
+   var myDB = firebase.database().ref('/SchoolTemp/');
+   myDB.on("child_added", displayData);
+
+
+    function displayData(data){
+      var eachRow = data.val()
+      document.getElementById("dataout").innerHTML += eachRow.temp + "<br>";
+      document.getElementById("lt").innerHTML = "Temp: " + eachRow.temp;
+      temps.push(parseInt(eachRow.temp));
+      drawGraph();
+    }
+
+    function drawGraph(){
+             // Data
+        var myTemps = {
+        y: temps,
+        mode: 'lines+markers',
+        name: "temps in Mon"
+        };
+        // Graph Layout
+        var layout = {
+        title: 'Monaghan Temps',
+        xaxis: { title: 'Time'},
+        yaxis: { title: 'Temp Deg C'}
+        };
+
+        // Data (can have more than one plot, add into here)
+        var data = [myTemps];
+
+        // Draw Graph
+        Plotly.newPlot('graph', data, layout);
+     
+    }
+
+ 
+</script>
+
+
+  </body>
+</html>
