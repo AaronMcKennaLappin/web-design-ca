@@ -1,3 +1,4 @@
+<css>
 body {
    background-image: linear-gradient(300deg, rgb(255,0,0), rgb(7,7,7));
     height: 1000px; 
@@ -58,3 +59,5 @@ a:active {
   color: #746F6F;
   text-decoration :none;
 }
+
+</css>
